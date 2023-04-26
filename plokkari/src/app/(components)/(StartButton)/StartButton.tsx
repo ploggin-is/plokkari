@@ -16,8 +16,19 @@ function StartButton(props) {
     const h3 = require("h3-js");
     const editRef = useRef();
     const polygonHandlerRef = useRef(null);
-    const [drawing, setDrawing] = useState(false);
-    const [text, setText] = useState("start");
+    const [button, setButton] = useState("start");
+    // const [isDrawing, setIsDtawing]
+
+
+    /**
+     * Min logik: Takkar eru synilegir ef ad td. polgon != null og drawing != false, 
+     * 
+     * 
+     * 
+     */
+
+    const [polygon, setPolygon] = useState(null)
+
     const map = useMap();
     useEffect(() => {
       if (editRef.current && editRef.current._toolbars.draw) {
@@ -29,11 +40,10 @@ function StartButton(props) {
       setPolygonStuff(cb[0])
     }, []);
 
-    const handleClick = (e) => {
-      const polygonHandler = polygonHandlerRef.current;
-      console.log(polygonHandler)
-      if (e.currentTarget.id === "start") {
-      setText("cancel")
+    const polygonHandler = polygonHandlerRef.current;
+
+    const startClick = (e) => {
+      setButton("finish")
       map.eachLayer((layer) => {
         if (layer instanceof L.Polygon) {
           layer.setStyle({ opacity: 0 });
@@ -44,18 +54,37 @@ function StartButton(props) {
       var event = document.createEvent('Event');
       event.initEvent('click', true, true);
       polygonStuff.dispatchEvent(event);
-      } 
-      else if (e.currentTarget.id === "edit") {  
+    }; 
+
+    const cancel1Click = (e) => {  
+      setButton("start")
         try {
-          polygonHandler.completeShape();
           polygonHandler.disable();
           }
         catch(ex){
-          console.log(ex);
+          // console.log(ex);
         }
-      } 
-      else if (e.currentTarget.id === "cancel1" || e.currentTarget.id === "cancel2") {
-        setText("start"); 
+        map.setView(map.getCenter(), 13)
+        map.eachLayer((layer) => {
+          if (layer instanceof L.Polygon) {
+            layer.setStyle({ opacity: 1 });
+          }
+        });
+      }; 
+
+      const finishClick = (e) => {  
+        setButton("start")
+          try {
+            polygonHandler.completeShape();
+            polygonHandler.disable();
+            }
+          catch(ex){
+            // console.log(ex);
+          }
+        }; 
+
+    const cancel2Click = (e) =>{
+      setButton("start"); 
         try {
           polygonHandler.disable();
           polygonHandler.deleteLastVertex();
@@ -69,18 +98,33 @@ function StartButton(props) {
             layer.setStyle({ opacity: 1 });
           }
         });
-      } 
       };
+
+      const cancel = () => {
+        polygon._map.eachLayer(layer => {
+          if(layer._leaflet_id  == polygon._leaflet_id){layer.remove()}
+        })
+        setPolygon(null)
+        // polygon._map.eachLayer(layer => {
+        //   if(layer._path != undefined){layer.remove()}
+        // })
+      };
+
+      const confirm = () => {
+        console.log("Confirm")
+      }
 
     const onShapeDrawn = (e) => {
         if(!editRef.current) { return; }
-        editRef.current._toolbars.edit._modes.edit.handler.enable()
+        e._temporarylol = true;
+        e.layer.editing.enable()
+        // editRef.current._toolbars.edit._modes.edit.handler.enable()
         e.layer.on('click', () => {
             editRef.current._toolbars.edit._modes.edit.handler.enable()
         })
         e.layer.on('contextmenu', () => {
             //do some contextmenu action here
-        })
+        })     
         e.layer.bindTooltip("Text", 
             {
               className: 'leaflet-draw-tooltip:before leaflet-draw-tooltip leaflet-draw-tooltip-visible',
@@ -88,7 +132,7 @@ function StartButton(props) {
               direction: 'right'
             }
         );
-        setText("edit")
+        setButton("edit")
     }
 
     return (
@@ -121,49 +165,57 @@ function StartButton(props) {
                 if (!ref) return;
                 L.DomEvent.disableClickPropagation(ref).disableScrollPropagation(ref);
               }}
-              > { text === "start" ? (
+              > { button === "start" ? (
                <div className='blobs'>
-              <button id="start"
-                className="start-button"
-                onClick={handleClick}
-                // style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
-                >
-                  Start
-                </button> 
+
+                <button
+                    className="start-button"
+                    onClick={startClick}
+                    style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
+                    >
+                      Start 
+                  </button> 
                 </div>
                 )
-                : text === "edit" ? 
+                : button === "finish" ? 
                 (
-                <div className='blobs'>
-                <button id="edit"
-                className="edit-button"
-                onClick={handleClick}
-                // style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
-                >
-                Confirm  
-                </button> 
-                <button id="cancel2"
-                className="cancel-button-2"
-                onClick={handleClick}
-                // style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
-                >
-                Cancel  
-                </button> 
-                </div>
+                  <div className='blobs'>
+                    <button 
+                    className="finish-button"
+                    onClick={finishClick}
+                    style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
+                    >
+                    Finish  
+                    </button> 
+                    <button
+                    className="cancel-button"
+                    onClick={cancel1Click}
+                    style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
+                    >
+                    Cancel  
+                    </button> 
+                  </div>
                 )
                 :
                 (
-                  <div className='blobs'>
-                  <button id="cancel1"
-                  className="cancel-button-1"
-                  onClick={handleClick}
-                  // style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
+                <div className='blobs'>
+                  <button
+                    className="edit-button"
+                    onClick={confirm}
+                    style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
+                    >
+                    Confirm  
+                  </button> 
+                  <button
+                    className="cancel-button"
+                    onClick={cancel2Click}
+                    style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
                   >
                   Cancel  
                   </button> 
-                  </div>
+                </div>
                 )
-                
+              
               }
             </div>
         </>
