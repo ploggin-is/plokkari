@@ -40,7 +40,7 @@ function Centralcircle(isPressed) {
   if (!circle) {
     circle = L.marker(map.getCenter(), {
       icon: new L.divIcon({
-        html: ReactDOMServer.renderToString(<RxCorners size={30} color='black'/>),
+        html: ReactDOMServer.renderToString(<RxCorners size={30} color='black' style={{transform: 'translate(-25%)'}} />),
         className: 'custom-marker-icon'
       }),
       id: 'circle' // Add an ID to the marker layer

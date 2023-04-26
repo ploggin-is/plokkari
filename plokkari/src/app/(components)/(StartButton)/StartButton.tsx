@@ -167,6 +167,7 @@ function StartButton(props) {
               }}
               > { button === "start" ? (
                <div className='blobs'>
+
                 <button
                     className="start-button"
                     onClick={startClick}

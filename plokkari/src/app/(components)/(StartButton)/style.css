@@ -15,7 +15,7 @@
     position: absolute;
     font-weight: bold;
     font-size: 1.5rem;
-    background: rgb(146, 218, 146);
+    background: rgb(0 255, 0, 0.5);
     color: black;
     border: 5px solid black;
     border-radius: 10%;
@@ -27,17 +27,21 @@
     transform: translate(-50%);
     box-shadow: 0 9px #686868;
   }
+  .start-button:hover {
+    background: rgb(0, 255, 0, 0.75);
+  }
   
   .start-button:active {
     box-shadow: 0 2px #666;
     transform: translate(-50%) translateY(5px);
+    background: rgb(0, 255, 0);
   }
 
   .finish-button {
     position: absolute;
     font-weight: bold;
     font-size: 1.5rem;
-    background: rgb(146, 218, 146);
+    background: rgb(255, 0, 0, 0.5);
     color: black;
     border: 5px solid black;
     border-radius: 10%;
@@ -47,6 +51,10 @@
     z-index: 9999;
     transform: translate(-80%);
     box-shadow: 0 9px #686868;
+  }
+
+  .cancel-button-1:hover {
+    background: rgb(255, 0, 0, 0.75);
   }
   
   .finish-button:active {
@@ -58,7 +66,7 @@
     position: absolute;
     font-weight: bold;
     font-size: 1.5rem;
-    background: rgb(146, 218, 146);
+    background: rgb(0, 255, 0, 0.5);
     color: black;
     border: 5px solid black;
     border-radius: 10%;
@@ -69,17 +77,22 @@
     transform: translate(-80%);
     box-shadow: 0 9px #686868;
   }
+
+  .edit-button:hover {
+    background: rgb(0, 255, 0, 0.75);
+  }
   
   .edit-button:active {
     box-shadow: 0 2px #666;
     transform: translate(-80%) translateY(5px);
+    background: rgb(0, 255, 0);
   }
 
   .cancel-button {
     position: absolute;
     font-weight: bold;
     font-size: 1.5rem;
-    background: rgb(146, 218, 146);
+    background: rgb(255, 0, 0, 0.5);
     color: black;
     border: 5px solid black;
     border-radius: 10%;
@@ -91,8 +104,13 @@
     transform: translate(30%);
     box-shadow: 0 9px #686868;
   }
+
+  .cancel-button-2:hover {
+    background: rgb(255, 0, 0, 0.75);
+  }
   
   .cancel-button:active {
     box-shadow: 0 2px #666;
+    background: rgb(255, 0, 0);
     transform: translate(30%) translateY(5px);
   }
