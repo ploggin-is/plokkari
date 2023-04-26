@@ -115,8 +115,19 @@ function StartButton(props) {
         let geometry = polygon.getLatLngs()[0].map(points => Object.values(points));
         const data = h3.polygonToCells(geometry, 12);
         console.log(data);
-        // const coordinates = h3.cellsToMultiPolygon(data, false);
-        // console.log(coordinates);
+        const requestInput =isPressed?"https://plokkari-api-service.azurewebsites.net/api/Trash/Trash":"https://plokkari-api-service.azurewebsites.net/api/Trash/Clean"
+        fetch(requestInput, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+             },
+            body: JSON.stringify({
+            hexIds: data
+            })
+         })
+
+         cancelNotComfirming()
         
       }
 
@@ -198,7 +209,7 @@ function StartButton(props) {
                     allowIntersection: false,
                     shapeOptions: {
                       color: "black",
-                      fillColor: "green"
+                      fillColor: isPressed ? 'red' : 'green'
                     },
                   }
                 }}

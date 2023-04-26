@@ -50,14 +50,14 @@ function GetHex(props) {
           
         })
       } 
-      // const dirtyBoundaries = data.Dirty;
-      // if(dirtyBoundaries != null){
-      //   dirtyBoundaries.coordinates.forEach((x, index) => {
-      //     // console.log(x);
-      //     boundedHex.push(<Polygon key={index} color={'red'} positions={x} />)
+      const dirtyBoundaries = data.Dirty;
+      if(dirtyBoundaries != null){
+        dirtyBoundaries.coordinates.forEach((x, index) => {
+          // console.log(x);
+          boundedHex.push(<Polygon key={index} color={'red'} positions={x} />)
           
-      //   })
-      // } 
+        })
+      } 
       // data.coordinates.foreach(coordList => {
       //   boundedHex.push(<Polygon key={1} color={'green'} positions={coordList} />)
 
