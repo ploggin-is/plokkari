@@ -126,7 +126,7 @@ function StartButton(props) {
               <button id="start"
                 className="start-button"
                 onClick={handleClick}
-                style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
+                // style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
                 >
                   Start
                 </button> 
@@ -138,14 +138,14 @@ function StartButton(props) {
                 <button id="edit"
                 className="edit-button"
                 onClick={handleClick}
-                style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
+                // style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
                 >
                 Confirm  
                 </button> 
                 <button id="cancel2"
                 className="cancel-button-2"
                 onClick={handleClick}
-                style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
+                // style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
                 >
                 Cancel  
                 </button> 
@@ -157,7 +157,7 @@ function StartButton(props) {
                   <button id="cancel1"
                   className="cancel-button-1"
                   onClick={handleClick}
-                  style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
+                  // style={{background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)'}}
                   >
                   Cancel  
                   </button> 
