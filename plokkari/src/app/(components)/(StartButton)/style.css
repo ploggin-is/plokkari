@@ -33,7 +33,7 @@
     transform: translate(-50%) translateY(5px);
   }
 
-  .cancel-button-1 {
+  .finish-button {
     position: absolute;
     font-weight: bold;
     font-size: 1.5rem;
@@ -45,14 +45,13 @@
     height: 100px;
     width: 150px;
     z-index: 9999;
-    left: 50%;
-    transform: translate(-50%);
+    transform: translate(-80%);
     box-shadow: 0 9px #686868;
   }
   
-  .cancel-button-1:active {
+  .finish-button:active {
     box-shadow: 0 2px #666;
-    transform: translate(-50%) translateY(5px);
+    transform: translate(-80%) translateY(5px);
   }
 
   .edit-button {
@@ -76,7 +75,7 @@
     transform: translate(-80%) translateY(5px);
   }
 
-  .cancel-button-2 {
+  .cancel-button {
     position: absolute;
     font-weight: bold;
     font-size: 1.5rem;
@@ -93,7 +92,7 @@
     box-shadow: 0 9px #686868;
   }
   
-  .cancel-button-2:active {
+  .cancel-button:active {
     box-shadow: 0 2px #666;
     transform: translate(30%) translateY(5px);
   }
