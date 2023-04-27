@@ -4,10 +4,10 @@
 name: Build and deploy Node.js app to Azure Web App - plokkari
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - develop
-  workflow_dispatch:
 
 jobs:
   build:
@@ -40,12 +40,17 @@ jobs:
         run: |
           cd app
           npm run build --if-present
+      
+      - name: Zip
+        run: |
+          cd app
+          zip -r node-app.zip .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: app
+          path: app/node-app.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -60,6 +65,11 @@ jobs:
         with:
           name: node-app
 
+      - name: Unzip
+        run: |
+          unzip node-app.zip
+          rm node-app.zip
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -68,3 +78,5 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_913C78EDCC534118B0BAAB036EA3904E }}
           package: .
+          runtime-stack: NODE|18-lts
+
