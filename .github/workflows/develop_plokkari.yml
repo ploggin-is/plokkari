@@ -60,7 +60,7 @@ jobs:
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2.4.0
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 'plokkari'
           slot-name: 'Production'
