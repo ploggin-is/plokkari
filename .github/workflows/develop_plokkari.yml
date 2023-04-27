@@ -20,18 +20,31 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '18.x'
+      
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            app/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: npm install, build, and test
         run: |
           cd app
           npm install --production --frozen-lockfile --force
+      
+      - name: Build
+        run: |
+          cd app
           npm run build --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: app
 
   deploy:
     runs-on: ubuntu-latest
