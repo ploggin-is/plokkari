@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+const config = {
   experimental: {
     appDir: true,
   },
@@ -9,4 +9,7 @@ module.exports = {
     pagesBufferLength: 5,
     silent: true,
   },
+  serverPort: 8080
 };
+
+module.exports = config;
