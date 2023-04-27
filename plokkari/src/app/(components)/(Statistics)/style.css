@@ -1,0 +1,71 @@
+.statistics-window {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "statistics-left statistics-right"
+    "statistics-down statistics-down";
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+  
+.statistics-left {
+  grid-area: statistics-left;
+}
+
+  
+.statistics-right {
+  grid-area: statistics-right;
+  font-size: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+  
+.statistics-image {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+  
+.statistics-left {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.statistics-left h3 {
+  font-size: 1rem; 
+}
+
+.statistics-left h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+  
+
+.statistics-down {
+  margin-left: 2rem;
+  grid-area: statistics-down;
+}
+  
+.statistics-down p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.statistics-change{
+  color: #00FF00;
+  font-weight: bold;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+} 
+
+.statistics-change.down {
+  color: red;
+}
+.statistics-change.up {
+  color: #00FF00;
+}
+  
+  

@@ -1,6 +1,7 @@
 "use client"
 import Image from 'next/image'
 import './style.css'
+import Statistics from '../(Statistics)/Statistics'
 
 
   
@@ -16,7 +17,7 @@ import './style.css'
             onClick= {() => alert("Open Home page")}>
             <li> <Image src="/(icons)/home.svg" width={30} height={20} /> Home</li>
           </button>
-          <button 
+          {/* <button 
             onClick= {() => alert("Show events")}>
             <li> <Image src="/(icons)/events.svg" width={30} height={20} /> Events</li>
           </button>
@@ -25,6 +26,7 @@ import './style.css'
             <li> <Image src="/(icons)/statistics.svg" width={30} height={20} /> Statistics</li>
           </button> */}
         </ul>
+        <Statistics />
         <div style={{ position: 'absolute', bottom: '65px', left: '50px' }}>
           <Image 
             src="/RU_logo.png" 
