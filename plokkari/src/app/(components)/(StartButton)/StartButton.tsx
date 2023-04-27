@@ -32,9 +32,11 @@ function StartButton(props) {
       setPolygonStuff(cb[0])
     }, []);
 
+
     const polygonHandler = polygonHandlerRef.current;
 
     const startDrawing = (e) => {
+      map.setMinZoom(18)
       setIsDrawing(true)
       map.eachLayer((layer) => {
         if (layer instanceof L.Polygon) {
@@ -65,6 +67,7 @@ function StartButton(props) {
 
     const cancelWhileDrawingPolygon = (e) => {  
       setIsDrawing(false)
+      map.setMinZoom(5)
       setHasShape(0)
         try {
           polygonHandler.disable();
@@ -72,7 +75,7 @@ function StartButton(props) {
         catch(ex){
           // console.log(ex);
         }
-        map.setView(map.getCenter(), 13)
+        // map.setView(map.getCenter(), 13)
         map.eachLayer((layer) => {
           if (layer instanceof L.Polygon) {
             layer.setStyle({ opacity: 1 });
@@ -95,6 +98,7 @@ function StartButton(props) {
             layer.setStyle({ opacity: 1 });
           }
         });
+        map.setMinZoom(5)
       }
 
       const confirm = () => {
@@ -118,6 +122,9 @@ function StartButton(props) {
 
         cancelNotComfirming()
         setHasShape(0)
+        map.setView(map.getCenter(), 16)
+        // window.location.reload();
+        // map.setView(map.getCenter(), 15)
       }
 
     const onShapeDrawn = (e) => {
@@ -157,13 +164,13 @@ function StartButton(props) {
       }
     };
 
-    var renderedPolygon = hexVerts?.map(coordinateSet => <Polygon key={hexVerts.indexOf(coordinateSet)} color="green" positions={coordinateSet}/>)
+    // var renderedPolygon = hexVerts?.map(coordinateSet => <Polygon key={hexVerts.indexOf(coordinateSet)} color="green" positions={coordinateSet}/>)
     
     
     return (
           <> 
             
-        {renderedPolygon}
+        {/* {renderedPolygon} */}
             <CleanButton changeCleanButton={setIsPressed} isPressed={isPressed} />
             <FeatureGroup >
               <EditControl

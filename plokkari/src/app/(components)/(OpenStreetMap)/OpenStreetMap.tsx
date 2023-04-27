@@ -122,8 +122,9 @@ const { latitude, longitude } = mapCenter;
 return (
   <MapContainer 
     center={[latitude, longitude]} 
-    zoom={props.zoomLvl} scrollWheelZoom={false} 
+    zoom={props.zoomLvl} scrollWheelZoom={true} 
     style={{ width: "100%", height: "100vh", margin: '0'}} 
+    minZoom={5}
     zoomControl={false} 
     onZoomEnd={() => setCurrentZoomLevel(useMap().getZoom())}>
    <Marker icon={RuIcon} position={[64.123721, -21.926725]}>
