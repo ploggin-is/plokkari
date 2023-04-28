@@ -77,3 +77,12 @@
     right: 0;
     height: 60px;
   }
+
+  .contact-card {
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+  }
