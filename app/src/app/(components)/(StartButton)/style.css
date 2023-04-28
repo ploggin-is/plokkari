@@ -11,6 +11,12 @@
   z-index: 9998;
 }
 
+@media only screen and (max-width: 1024px) {
+  .blobs  {
+    bottom: 20vh;
+  }
+}
+
 .start-button {
     position: absolute;
     font-weight: bold;
