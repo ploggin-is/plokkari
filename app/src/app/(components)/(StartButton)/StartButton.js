@@ -35,7 +35,6 @@ function StartButton(props) {
     const polygonHandler = polygonHandlerRef.current;
 
     const startDrawing = (e) => {
-      map.setMinZoom(18)
       setIsDrawing(true)
       map.eachLayer((layer) => {
         if (layer instanceof L.Polygon) {
@@ -43,6 +42,10 @@ function StartButton(props) {
           }
         });
       map.flyTo(map.getCenter(), 18, {animate: true, duration: 1})
+      map.once('moveend', function () {
+        map.setMinZoom(18)
+      });
+
       e.preventDefault()
       var event = document.createEvent('Event');
       event.initEvent('click', true, true);
