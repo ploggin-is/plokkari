@@ -118,7 +118,8 @@ function StartButton(props) {
             hexIds: data
             })
          })
-
+        
+         map.setMinZoom(5)
         cancelNotComfirming()
         setHasShape(0)
         map.setView(map.getCenter(), 16)
