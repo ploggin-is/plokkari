@@ -32,6 +32,9 @@ function MenuToolbar({ menuOpen, toggleMenu }) {
           height={200} 
           />
       </div>
+      <div className='contact-card'>
+        <h2>Contact: <span  style={{ color:'green', fontStyle: 'italic' }}> hello@ploggin.is</span></h2>
+      </div>
       {/* <button className="settings-button"
           onClick= {() => alert("Open Settings")}>
           <li> <Image src="/(icons)/settings.svg" width={30} height={20} /> Settings</li>

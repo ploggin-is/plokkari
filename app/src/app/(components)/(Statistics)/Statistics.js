@@ -4,21 +4,29 @@ import { useEffect, useState } from "react";
 import './style.css';
 
 const Statistics = () => {
-    const [increaseText, setIncreaseText] = useState("");
-    const [increased, setIncreased] = useState(true);
+    // const [increaseText, setIncreaseText] = useState("");
+    // const [increased, setIncreased] = useState(true);
     const [kmCleaned, setKmCleaned] = useState(0);
     useEffect(() => {
       // TODO: get these values from the back end
-      setKmCleaned(7)
-      const percentage = 25;
+      fetch('https://plokkari-api-service.azurewebsites.net//api/Trash/statistics')
+        .then(res => res.json()).then( stat => {
+          if (stat !== null) {
+            // console.log("here")
+            // console.log(stat['areaCleaned'])
+            setKmCleaned(stat['areaCleaned'].toFixed(2))                
+          }
+        })
+      // setKmCleaned(7)
+    //   const percentage = 25;
   
-      if (percentage >= 0) {
-        setIncreaseText("&#x1F805; " + percentage + "%  ");
-        setIncreased(true);
-      } else {
-        setIncreaseText("&#x1F807; " + -percentage + "%  ");
-        setIncreased(false);
-      }
+    //   if (percentage >= 0) {
+    //     setIncreaseText("&#x1F805; " + percentage + "%  ");
+    //     setIncreased(true);
+    //   } else {
+    //     setIncreaseText("&#x1F807; " + -percentage + "%  ");
+    //     setIncreased(false);
+    //   }
     }, []);
 
   return (
@@ -32,7 +40,7 @@ const Statistics = () => {
           <Image src="/iceland.png" width={130} height={90} />
         </div>
       </div>
-      <div className='statistics-down'>
+      {/* <div className='statistics-down'>
         <p>
           <span 
             className={`statistics-change ${increased ? 'up' : 'down'}`} 
@@ -40,7 +48,7 @@ const Statistics = () => {
           </span> 
           since last week
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };
