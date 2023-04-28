@@ -2,7 +2,7 @@
   position: absolute;
   display: flex;
   transform: translateX(-50%);
-  bottom: 3vh;
+  bottom: 3%;
   left: 50%;
   height: 100px;
   width: 100px;
@@ -13,7 +13,7 @@
 
 @media only screen and (max-width: 1024px) {
   .blobs  {
-    bottom: 5vh;
+    bottom: 11%;
   }
 }
 
