@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
-const config = {
+const nextConfig = {
   experimental: {
     appDir: true,
   },
-  ignoreDuringBuilds: true,
-};
+}
 
-module.exports = config;
+module.exports = nextConfig

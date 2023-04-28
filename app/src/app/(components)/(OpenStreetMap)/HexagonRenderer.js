@@ -50,7 +50,7 @@ function GetHex(props) {
       if(dirtyBoundaries != null){
         dirtyBoundaries.coordinates.forEach((x, index) => {
           // console.log(x);
-          boundedHex.push(<Polygon key={index} color={'red'} positions={x} />)
+          boundedHex.push(<Polygon key={index + cleanBoundaries.coordinates.length} color={'red'} positions={x} />)
           
         })
       } 

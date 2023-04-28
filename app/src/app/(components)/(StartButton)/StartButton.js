@@ -35,7 +35,6 @@ function StartButton(props) {
     const polygonHandler = polygonHandlerRef.current;
 
     const startDrawing = (e) => {
-      map.setMinZoom(18)
       setIsDrawing(true)
       map.eachLayer((layer) => {
         if (layer instanceof L.Polygon) {
@@ -43,6 +42,10 @@ function StartButton(props) {
           }
         });
       map.flyTo(map.getCenter(), 18, {animate: true, duration: 1})
+      map.once('moveend', function () {
+        map.setMinZoom(18)
+      });
+
       e.preventDefault()
       var event = document.createEvent('Event');
       event.initEvent('click', true, true);
@@ -92,6 +95,8 @@ function StartButton(props) {
         setIsDrawing(false)
         setHasPolygon(false)
         setHasShape(0)
+        
+        map.setMinZoom(5)
         map.setView(map.getCenter(), 13)
         map.eachLayer((layer) => {
           if (layer instanceof L.Polygon) {
@@ -118,7 +123,8 @@ function StartButton(props) {
             hexIds: data
             })
          })
-
+        
+         map.setMinZoom(5)
         cancelNotComfirming()
         setHasShape(0)
         map.setView(map.getCenter(), 16)
@@ -173,8 +179,13 @@ function StartButton(props) {
               <EditControl
                 onMounted={  mapInstance => { editRef.current= mapInstance } }
                 position='bottomleft'
-                onCreated={onShapeDrawn}
-                onDrawVertex={onVertexDraw}
+                // onCreated={onShapeDrawn}
+                // onDrawVertex={onVertexDraw}
+
+                onDrawStart={(e) => {
+                  console.log(e);
+                  console.log("fooo!");
+                }}
                 //here you can specify your shape options and which handler you want to enable
                 draw={{
                   rectangle: false,
@@ -201,13 +212,12 @@ function StartButton(props) {
                <div className='blobs'
                ref={(ref) => {
                 if (!ref) return;
-                /** import L from "leaflet"; */
                 L.DomEvent.disableClickPropagation(ref).disableScrollPropagation(ref);
               }}
                >
-                  <button className="start-button" onClick={startDrawing}>
+                  {/* <button className="start-button" onClick={startDrawing}>
                     Start 
-                  </button> 
+                  </button>  */}
                 </div>
                 )
                 : 
@@ -215,7 +225,6 @@ function StartButton(props) {
                   <div className='blobs'
                   ref={(ref) => {
                     if (!ref) return;
-                    /** import L from "leaflet"; */
                     L.DomEvent.disableClickPropagation(ref).disableScrollPropagation(ref);
                   }}>
                     <button className="finish-button" onClick={finishDrawingPolygon} style={{background: hasShape < 3 ? 'grey' : 'rgb(146, 218, 146)'}}>
@@ -229,7 +238,6 @@ function StartButton(props) {
                     <div className='blobs'
                     ref={(ref) => {
                       if (!ref) return;
-                      /** import L from "leaflet"; */
                       L.DomEvent.disableClickPropagation(ref).disableScrollPropagation(ref);
                     }}>
                       <button className="edit-button" onClick={confirm}>

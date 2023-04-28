@@ -6,7 +6,7 @@ import { EditControl } from 'react-leaflet-draw';
 import CleanButton from '../(CleanButton)/CleanButton';
 import L from "leaflet";
 
-import "./PolygonEditor/style.css"
+// import "./PolygonEditor/style.css"
 
 function StartButton(props) {
   
