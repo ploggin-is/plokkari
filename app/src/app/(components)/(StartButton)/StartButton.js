@@ -92,6 +92,8 @@ function StartButton(props) {
         setIsDrawing(false)
         setHasPolygon(false)
         setHasShape(0)
+        
+        map.setMinZoom(5)
         map.setView(map.getCenter(), 13)
         map.eachLayer((layer) => {
           if (layer instanceof L.Polygon) {
