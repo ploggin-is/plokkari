@@ -28,8 +28,6 @@ function GetHex(props) {
            getHex();
       })
     }, []);
-
-    console.log(data);
     
     if (data !== null) {
 

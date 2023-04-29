@@ -16,8 +16,9 @@
     bottom: 11%;
   }
 }
-
+body > main > div.map-container > div > div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(1) > div > a,
 .start-button {
+    
     position: absolute;
     font-weight: bold;
     font-size: 1.5rem;
@@ -29,8 +30,10 @@
     height: 100px;
     width: 150px;
     z-index: 9999;
-    left: 50%;
-    transform: translate(-50%);
+    /* left: 40vw; */
+    /* margin: 50% !important; */
+    bottom: 20px !important;
+    /* transform: translate(-50%); */
     box-shadow: 0 9px #686868;
   }
   .start-button:hover {
@@ -42,8 +45,9 @@
     transform: translate(-50%) translateY(5px);
     background: rgb(86, 180, 86);
   }
-
+  body > main > div.map-container > div > div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(1) > ul > li:nth-child(1) > a,
   .finish-button {
+    left: 55vw;
     position: absolute;
     font-weight: bold;
     font-size: 1.3rem;
@@ -59,6 +63,9 @@
     box-shadow: 0 9px #686868;
   }
 
+  body > main > div.map-container > div > div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(1) > ul > li:nth-child(2) {
+    display: none;
+  }
   .finish-button:hover {
     background: rgb(111, 196, 111);
   }
@@ -95,6 +102,7 @@
     background: rgb(86, 180, 86);
   }
 
+  body > main > div.map-container > div > div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(1) > ul > li:nth-child(3) > a,
   .cancel-button {
     position: absolute;
     font-weight: bold;
@@ -106,6 +114,7 @@
     cursor: pointer;
     height: 100px;
     width: 150px;
+    left: 50vw;
     z-index: 9999;
     left: 50%;
     transform: translate(30%);
@@ -121,3 +130,37 @@
     background: rgb(182, 78, 70);
     transform: translate(30%) translateY(5px);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* 
+   */
+div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(2) {
+
+  display: none;
+}
+.custom-leaflet-show {
+  display: block !important;
+}
+
+.custom-leaflet-hide { 
+  display: none !important
+}

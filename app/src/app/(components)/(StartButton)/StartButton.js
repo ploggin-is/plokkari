@@ -9,7 +9,50 @@ import L from "leaflet";
 import "./PolygonEditor/style.css"
 
 function StartButton(props) {
-  
+
+
+  useEffect(() => {
+    if (editRef.current && editRef.current._toolbars.draw) {
+      const polygonHandler = editRef.current._toolbars.draw._modes.polygon.handler;
+      polygonHandlerRef.current = polygonHandler;
+    }
+
+    var x = document.querySelector("body > main > div.map-container > div > div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(1) > ul > li:nth-child(3) > a");
+    x?.addEventListener( x => {
+      console.log("CLICKED CANCEL BUTTON");
+    })
+
+    // document.querySelector("body > main > div.map-container > div > div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(1) > div > a").innerHTML = "Start";
+    
+  }, []);
+
+
+    const showToolbar = (show)=>{
+      const tb = document.querySelector('body > main > div.map-container > div > div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(2)')
+      console.log(tb);
+      if(show){
+        tb.classList.add("custom-leaflet-show")
+        // Here we have to change the contents of things here and there ..
+        var x = document.querySelector('body > main > div.map-container > div > div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(1) > ul > li:nth-child(1) > a')
+        if(x){ x.innerHTML = "asdf"}
+      }
+      else {
+        tb.classList.remove("custom-leaflet-show")
+      }
+    }
+
+    const showDrawTool = (show) => {
+      console.log("ASDJOSAJDSAPJD", show);
+      const db = document.querySelector("body > main > div.map-container > div > div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(1) > div")
+      if(show){
+        db.classList = db.classList.remove("custom-leaflet-hide") 
+      } else {
+        db.classList.add("custom-leaflet-hide")
+      }
+    }
+
+
+
     const [hasShape, setHasShape] = useState(0);
     const [polygonStuff, setPolygonStuff] = useState(null)
     const [isPressed, setIsPressed] = useState(false);
@@ -22,167 +65,175 @@ function StartButton(props) {
     const [polygon, setPolygon] = useState(null)
     const [hexVerts, setHexVerts ] = useState(null)
     const map = useMap();
-    useEffect(() => {
-      if (editRef.current && editRef.current._toolbars.draw) {
-        const polygonHandler = editRef.current._toolbars.draw._modes.polygon.handler;
-        polygonHandlerRef.current = polygonHandler;
-      }
-      var cb = document.getElementsByClassName('leaflet-draw-draw-polygon');
-      console.log(cb)
-      setPolygonStuff(cb[0])
-    }, []);
+    
 
     const polygonHandler = polygonHandlerRef.current;
 
-    const startDrawing = (e) => {
-      setIsDrawing(true)
-      map.eachLayer((layer) => {
-        if (layer instanceof L.Polygon) {
-          layer.setStyle({ opacity: 0 });
-          }
-        });
-      map.flyTo(map.getCenter(), 18, {animate: true, duration: 1})
-      map.once('moveend', function () {
-        map.setMinZoom(18)
-      });
+    // const startDrawing = (e) => {
+    //   setIsDrawing(true)
+    //   map.eachLayer((layer) => {
+    //     if (layer instanceof L.Polygon) {
+    //       layer.setStyle({ opacity: 0 });
+    //       }
+    //     });
+    //   map.flyTo(map.getCenter(), 18, {animate: true, duration: 1})
+    //   map.once('moveend', function () {
+    //     map.setMinZoom(18)
+    //   });
 
-      e.preventDefault()
-      var event = document.createEvent('Event');
-      event.initEvent('click', true, true);
-      polygonStuff.dispatchEvent(event);
-    }; 
+    //   e.preventDefault()
+    //   var event = document.createEvent('Event');
+    //   event.initEvent('click', true, true);
+    //   polygonStuff.dispatchEvent(event);
+    // }; 
 
-    const finishDrawingPolygon = (e) => {
-      if (map.getZoom() == 18) {
-        if (hasShape > 2) {
-          try {
-            polygonHandler.completeShape();
-            polygonHandler.disable();
-            }
-          catch(ex){
-            console.log(ex);
-          }}
-      } else {
-        map.setView(map.getCenter(), 18)
-      }
-    };
+    // const finishDrawingPolygon = (e) => {
+    //   if (map.getZoom() == 18) {
+    //     if (hasShape > 2) {
+    //       try {
+    //         polygonHandler.completeShape();
+    //         polygonHandler.disable();
+    //         }
+    //       catch(ex){
+    //         console.log(ex);
+    //       }}
+    //   } else {
+    //     map.setView(map.getCenter(), 18)
+    //   }
+    // };
 
-    const cancelWhileDrawingPolygon = (e) => {  
-      map.setMinZoom(5)
-      setIsDrawing(false)
-      setHasShape(0)
-        try {
-          polygonHandler.disable();
-          }
-        catch(ex){
-          // console.log(ex);
-        }
-        // map.setView(map.getCenter(), 13)
-        map.eachLayer((layer) => {
-          if (layer instanceof L.Polygon) {
-            layer.setStyle({ opacity: 1 });
-          }
-        });
-        map.setMinZoom(5)
-      }; 
+    // const cancelWhileDrawingPolygon = (e) => {  
+    //   map.setMinZoom(5)
+    //   setIsDrawing(false)
+    //   setHasShape(0)
+    //     try {
+    //       polygonHandler.disable();
+    //       }
+    //     catch(ex){
+    //       // console.log(ex);
+    //     }
+    //     // map.setView(map.getCenter(), 13)
+    //     map.eachLayer((layer) => {
+    //       if (layer instanceof L.Polygon) {
+    //         layer.setStyle({ opacity: 1 });
+    //       }
+    //     });
+    //     map.setMinZoom(5)
+    //   }; 
 
-      const cancelNotComfirming = () => {
+      // const cancelNotComfirming = () => {
         
-        polygon._map.eachLayer(layer => {
-          if(layer._leaflet_id  == polygon._leaflet_id){layer.remove()}
-        })
-        setPolygon(null)
-        setIsDrawing(false)
-        setHasPolygon(false)
-        setHasShape(0)
+      //   polygon._map.eachLayer(layer => {
+      //     if(layer._leaflet_id  == polygon._leaflet_id){layer.remove()}
+      //   })
+      //   setPolygon(null)
+      //   setIsDrawing(false)
+      //   setHasPolygon(false)
+      //   setHasShape(0)
         
-        map.setMinZoom(5)
-        map.setView(map.getCenter(), 13)
-        map.eachLayer((layer) => {
-          if (layer instanceof L.Polygon) {
-            layer.setStyle({ opacity: 1 });
-          }
-        });
-      }
+      //   map.setMinZoom(5)
+      //   map.setView(map.getCenter(), 13)
+      //   map.eachLayer((layer) => {
+      //     if (layer instanceof L.Polygon) {
+      //       layer.setStyle({ opacity: 1 });
+      //     }
+      //   });
+      // }
 
-      const confirm = () => {
-        console.log("Confirm")
-        console.log(polygon.getLatLngs())
-        let geometry = polygon.getLatLngs()[0].map(points => Object.values(points));
-        // console.log(h3)
-        const data = h3.polygonToCells(geometry, 12);
-        console.log(data);
-        const requestInput =isPressed?"https://plokkari-api-service.azurewebsites.net/api/Trash/Trash":"https://plokkari-api-service.azurewebsites.net/api/Trash/Clean"
-        fetch(requestInput, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-             },
-            body: JSON.stringify({
-            hexIds: data
-            })
-         })
+      // const confirm = () => {
+      //   console.log("Confirm")
+      //   console.log(polygon.getLatLngs())
+      //   let geometry = polygon.getLatLngs()[0].map(points => Object.values(points));
+      //   // console.log(h3)
+      //   const data = h3.polygonToCells(geometry, 12);
+      //   console.log(data);
+      //   const requestInput =isPressed?"https://plokkari-api-service.azurewebsites.net/api/Trash/Trash":"https://plokkari-api-service.azurewebsites.net/api/Trash/Clean"
+      //   fetch(requestInput, {
+      //       method: 'POST',
+      //       headers: {
+      //           'Accept': 'application/json',
+      //           'Content-Type': 'application/json',
+      //        },
+      //       body: JSON.stringify({
+      //       hexIds: data
+      //       })
+      //    })
         
-         map.setMinZoom(5)
-        cancelNotComfirming()
-        setHasShape(0)
-        map.setView(map.getCenter(), 16)
-      }
+      //    map.setMinZoom(5)
+      //   cancelNotComfirming()
+      //   setHasShape(0)
+      //   map.setView(map.getCenter(), 16)
+      // }
 
     const onShapeDrawn = (e) => {
-        if(!editRef.current) { return; }
-        setPolygon(e.layer)
+      console.log(e);
+      console.log("here i am");
+      showToolbar(true)
+      showDrawTool(false)
+        // if(!editRef.current) { return; }
+        // setPolygon(e.layer)
         e.layer.editing.enable()
-
-        let geometry = e.layer.getLatLngs()[0].map(points => Object.values(points));
-        // console.log(h3)
-        const data = h3.polygonToCells(geometry, 12);
-       
-        setHexVerts(h3.cellsToMultiPolygon(data))
-
-        // editRef.current._toolbars.edit._modes.edit.handler.enable()
-        e.layer.on('click', () => {
-            editRef.current._toolbars.edit._modes.edit.handler.enable()
-        })
-        e.layer.on('contextmenu', () => {
-            //do some contextmenu action here
-        })     
-        e.layer.bindTooltip("Text", 
-            {
-              className: 'leaflet-draw-tooltip:before leaflet-draw-tooltip leaflet-draw-tooltip-visible',
-              sticky: true,
-              direction: 'right'
-            }
-        );
-        setHasPolygon(true)
-        setHasShape(0)
+        setHasShape(true)
+        // let geometry = e.layer.getLatLngs()[0].map(points => Object.values(points));
+        // // // // console.log(h3)
+        // const data = h3.polygonToCells(geometry, 12);
+        // console.log(data);
+        // e()þþþ
+        // setHexVerts(h3.cellsToMultiPolygon(data))
+        // // editRef.current._toolbars.edit._modes.edit.handler.enable()
+        // e.layer.on('click', () => {
+        //     editRef.current._toolbars.edit._modes.edit.handler.enable()
+        // })
+        // e.layer.on('contextmenu', () => {
+        //     //do some contextmenu action here
+        // })     
+        // e.layer.bindTooltip("Text", 
+        //     {
+        //       className: 'leaflet-draw-tooltip:before leaflet-draw-tooltip leaflet-draw-tooltip-visible',
+        //       sticky: true,
+        //       direction: 'right'
+        //     }
+        // );
+        // setHasPolygon(true)
+        // setHasShape(0)
     }
     
-    const onVertexDraw = () => {
-      if (map.getZoom() == 18) {
-      setHasShape(prevHasShape => prevHasShape + 1);
-      } else {
-        map.setView(map.getCenter(), 18)
-      }
-    };
+    // const onVertexDraw = () => {
+    //   if (map.getZoom() == 18) {
+    //   setHasShape(prevHasShape => prevHasShape + 1);
+    //   } else {
+    //     map.setView(map.getCenter(), 18)
+    //   }
+    // };
 
-    // var renderedPolygon = hexVerts?.map(coordinateSet => <Polygon key={hexVerts.indexOf(coordinateSet)} color="green" positions={coordinateSet}/>)
-    
+    var renderedPolygon = hexVerts?.map(coordinateSet => <Polygon key={hexVerts.indexOf(coordinateSet)} color="green" positions={coordinateSet}/>)
+    const onStopDrawing = (e) => {
+      console.log(e);
+      if(hasShape){
+        console.log("I am in onstop, showing draw tool");
+        showDrawTool(false);
+      } else {
+        console.log("I am in onstop, not showing draw tool");
+        showDrawTool(true);
+      }
+    }
     
     return (
           <> 
             
-        {/* {renderedPolygon} */}
+        {renderedPolygon}
             <CleanButton changeCleanButton={setIsPressed} isPressed={isPressed} />
             <FeatureGroup >
               <EditControl
-                onMounted={  mapInstance => { editRef.current= mapInstance } }
+                // onMounted={  mapInstance => { editRef.current= mapInstance } }
                 position='bottomleft'
                 onCreated={onShapeDrawn}
-                onDrawVertex={onVertexDraw}
+                onDrawStart={ ()=> { showDrawTool(false) }}
+                onDrawStop={onStopDrawing}
+                // onDrawVertex={onVertexDraw}
                 //here you can specify your shape options and which handler you want to enable
                 draw={{
+                  
                   rectangle: false,
                   circle: false,
                   polyline: false,
@@ -198,7 +249,7 @@ function StartButton(props) {
                 }}
                 />
             </FeatureGroup>
-            <div
+            {/* <div
               ref={(ref) => {
                 if (!ref) return;
                 L.DomEvent.disableClickPropagation(ref).disableScrollPropagation(ref);
@@ -207,21 +258,20 @@ function StartButton(props) {
                <div className='blobs'
                ref={(ref) => {
                 if (!ref) return;
-                /** import L from "leaflet"; */
+                
                 L.DomEvent.disableClickPropagation(ref).disableScrollPropagation(ref);
               }}
                >
                   <button className="start-button" onClick={startDrawing}>
                     Start 
-                  </button> 
-                </div>
-                )
-                : 
+                  </button> }
+            </div> */}
+                
+                {/* : 
                 !hasPolygon ? (
                   <div className='blobs'
                   ref={(ref) => {
                     if (!ref) return;
-                    /** import L from "leaflet"; */
                     L.DomEvent.disableClickPropagation(ref).disableScrollPropagation(ref);
                   }}>
                     <button className="finish-button" onClick={finishDrawingPolygon} style={{background: hasShape < 3 ? 'grey' : 'rgb(146, 218, 146)'}}>
@@ -235,7 +285,6 @@ function StartButton(props) {
                     <div className='blobs'
                     ref={(ref) => {
                       if (!ref) return;
-                      /** import L from "leaflet"; */
                       L.DomEvent.disableClickPropagation(ref).disableScrollPropagation(ref);
                     }}>
                       <button className="edit-button" onClick={confirm}>
@@ -246,8 +295,8 @@ function StartButton(props) {
                       </button> 
                     </div>
                   )
-                } 
-            </div>
+                }  */}
+            {/* </div> */}
         </>
     );
 };
