@@ -53,18 +53,18 @@ function StartButton(props) {
 
 
 
-    const [hasShape, setHasShape] = useState(0);
-    const [polygonStuff, setPolygonStuff] = useState(null)
+    const [hasShape, setHasShape] = useState(false);
+    // const [polygonStuff, setPolygonStuff] = useState(null)
     const [isPressed, setIsPressed] = useState(false);
     const h3 = require("h3-js");
     const editRef = useRef();
     const polygonHandlerRef = useRef(null);
     const [hasPolygon, setHasPolygon] = useState(false);
-    const [isDrawing, setIsDrawing] = useState(false);
+    // const [isDrawing, setIsDrawing] = useState(false);
 
-    const [polygon, setPolygon] = useState(null)
+    // const [polygon, setPolygon] = useState(null)
     const [hexVerts, setHexVerts ] = useState(null)
-    const map = useMap();
+    // const map = useMap();
     
 
     const polygonHandler = polygonHandlerRef.current;
@@ -210,14 +210,15 @@ function StartButton(props) {
     const onStopDrawing = (e) => {
       console.log(e);
       if(hasShape){
-        console.log("I am in onstop, showing draw tool");
+        console.log("I am in onstop, not showing draw tool");
         showDrawTool(false);
       } else {
-        console.log("I am in onstop, not showing draw tool");
+        console.log("I am in onstop, showing draw tool");
         showDrawTool(true);
+        setHasShape(false)
       }
     }
-    
+    console.log(hasShape);
     return (
           <> 
             
@@ -239,7 +240,7 @@ function StartButton(props) {
                   polyline: false,
                   circlemarker: false,
                   marker: false,
-                  polygon: {
+                  polygon: hasShape? false : {
                     allowIntersection: false,
                     shapeOptions: {
                       color: "black",
@@ -247,8 +248,13 @@ function StartButton(props) {
                     },
                   }
                 }}
+                edit = {{
+                  polygon: true
+                }}
                 />
             </FeatureGroup>
+
+            {hasShape && <button className='finish-button'>Publish!</button>}
             {/* <div
               ref={(ref) => {
                 if (!ref) return;

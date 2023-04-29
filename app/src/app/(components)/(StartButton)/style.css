@@ -48,6 +48,7 @@ body > main > div.map-container > div > div.leaflet-control-container > div.leaf
   body > main > div.map-container > div > div.leaflet-control-container > div.leaflet-bottom.leaflet-left > div > div:nth-child(1) > ul > li:nth-child(1) > a,
   .finish-button {
     left: 55vw;
+    bottom: 5vh;
     position: absolute;
     font-weight: bold;
     font-size: 1.3rem;

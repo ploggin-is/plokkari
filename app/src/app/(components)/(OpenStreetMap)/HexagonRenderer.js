@@ -35,7 +35,6 @@ function GetHex(props) {
       // cleancoordinates.forEach((data) => {
       //   boundedHex.push(<Polygon color={'green'} key={number = number +1} positions={data}/>)
       // })
-      console.log(data);
       const cleanBoundaries = data.Clean;
       if(cleanBoundaries != null){
           cleanBoundaries.coordinates.forEach((x, index) => {

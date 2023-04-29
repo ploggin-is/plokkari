@@ -64,7 +64,6 @@ const OpenStreetMap = (props) => {
   const triggerGetHexFunction = useRef(null)
   const [hexData, setHexData] = useState(null);
 
-  console.log(props.zoomLvl)
   const RuIcon = new L.Icon({
     iconUrl: "/RU_logo_no_text.png",
     iconSize: [50, 50],
