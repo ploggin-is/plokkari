@@ -32,6 +32,9 @@
    background-size: 300px 30px;
    background-clip: padding-box
 }
+.leaflet-control-container .leaflet-top, .leaflet-control-container .leaflet-bottom {
+	transform: translate3d(0px, 0px, 0px);
+}
 
 .leaflet-retina .leaflet-draw-toolbar a {
    background-image: url('./Images/spritesheet-2x.png');
