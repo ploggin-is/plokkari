@@ -1,39 +1,37 @@
 "use client"
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { MapContainer, FeatureGroup, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import Image from 'next/image'
-import React, { useEffect, useState, useRef} from 'react';
-import 'leaflet/dist/leaflet.css';
-import Loading from '../(Loading)/Loading';
-import './style.css'
 import L from 'leaflet';
-
-import "./leaflet.css"
-import "./leaflet.draw.css"
+import ReactDOMServer from 'react-dom/server';
+import Image from 'next/image';
+import Loading from '../(Loading)/Loading';
+import './style.css';
+import './leaflet.css';
+import './leaflet.draw.css';
 import HexagonRenderer from './HexagonRenderer';
 import StartButton from '../(StartButton)/StartButton';
-
-
 import { RxCorners } from 'react-icons/rx';
-import ReactDOMServer from 'react-dom/server';
+
+import "leaflet/dist/leaflet.css";
 
 const SetViewOnClick = ({zoomLvl}) => {
   const map = useMap();
-
+  
   useEffect(() => {
   map.flyTo(map.getCenter(),zoomLvl,{
     animate: true,
     duration: 1 // in seconds
+    });
   });
-});
-return null;
-
+  return null;
+  
 }
-
+  
 const Centralcircle = () => {
   const map = useMap();
   let circle = null;
   map.eachLayer(function(layer) {
-  if (layer.options && layer.options.id === 'circle') {
+    if (layer.options && layer.options.id === 'circle') {
       circle = layer;
     }
   }); 
@@ -46,15 +44,14 @@ const Centralcircle = () => {
       id: 'circle' // Add an ID to the marker layer
     }).addTo(map);
   }
-
+  
   // Update the marker position when the map is moved
   map.on('move', function(e) {
     circle.setLatLng(map.getCenter());
     // map._renderer._update();
-
   });
   return null
-  }
+}
 
   
 
@@ -62,7 +59,6 @@ const OpenStreetMap = (props) => {
   const [mapCenter, setMapCenter] = useState(null);
 
   const triggerGetHexFunction = useRef(null)
-  const [hexData, setHexData] = useState(null);
 
   console.log(props.zoomLvl)
   const RuIcon = new L.Icon({
@@ -71,47 +67,43 @@ const OpenStreetMap = (props) => {
     iconAnchor: [25, 25]
   });
   
+  const handleLocationError = useCallback((error) => {
+    console.log("Error getting location")
 
-  const options = {
-    enableHighAccuracy: true,
-    maximumAge: 30000,
-    timeout: 27000
-  };
-  
-  
-  useEffect(() => {
-  if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // Save the location
-        setMapCenter({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        });
-
-      },
-      (error) => {
-        console.log("Error getting location")
-
-        // In case of an error, show Reykjavík University
-        setMapCenter({
-          latitude: 64.124025,
-          longitude: -21.925479
-        });
-      },
-      options
-    );
-  } else {
-    console.log("Geolocation is not supported by this browser.");
     // In case of an error, show Reykjavík University
     setMapCenter({
       latitude: 64.124025,
       longitude: -21.925479
     });
-  }
+  }, [setMapCenter]);
 
 
-}, []);
+  
+  useEffect(() => {
+    const options = {
+      enableHighAccuracy: true,
+      maximumAge: 30000,
+      timeout: 27000
+    };
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // Save the location
+          setMapCenter({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          });
+
+        },
+        handleLocationError,
+        options
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+      handleLocationError();
+    }
+  }, [handleLocationError]);
 
 // Wait while geting location
 if (!mapCenter) {
@@ -142,28 +134,6 @@ return (
     />
     <SetViewOnClick zoomLvl={props.zoomLvl}/>
     <Centralcircle isPressed={props.isPressed}/>
-    {/* <FeatureGroup >
-      <EditControl
-        ref={editRef}
-        position='bottomright'
-        onCreated={onShapeDrawn}
-        //here you can specify your shape options and which handler you want to enable
-        draw={{
-          rectangle: false,
-          circle: false,
-          polyline: false,
-          circlemarker: false,
-          marker: false,
-          polygon: {
-            allowIntersection: false,
-            shapeOptions: {
-              color: "#ff0000"
-              },
-          }
-        }}/>
-        
-    </FeatureGroup> */}
-    {/* <CleanButton /> */}
     <StartButton />
     <HexagonRenderer triggerGetHexFunction={triggerGetHexFunction} />
   </MapContainer>
