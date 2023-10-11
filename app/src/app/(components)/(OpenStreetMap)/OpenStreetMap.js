@@ -56,10 +56,12 @@ const Centralcircle = () => {
   return null
   }
 
-  
 
 const OpenStreetMap = (props) => {
   const [mapCenter, setMapCenter] = useState(null);
+  const [coastlineData, setCoastlineData] = useState(null); 
+  const mapRef = useRef(null);
+
 
   const triggerGetHexFunction = useRef(null)
   const [hexData, setHexData] = useState(null);
@@ -77,9 +79,29 @@ const OpenStreetMap = (props) => {
     maximumAge: 30000,
     timeout: 27000
   };
+
+  
+  // Function to fetch costline GeoJSON data
+  async function fetchCoastlineData() {
+    try {
+      const wfsUrl = 'https://gis.lmi.is/geoserver/umhverfisraduneytid/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=umhverfisraduneytid%3Aloka&maxFeatures=100000&outputFormat=application%2Fjson';
+      const response = await fetch(wfsUrl);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const coastlineData = await response.json();
+      setCoastlineData(coastlineData);
+
+    } catch (error) {
+      console.error('Error fetching GeoJSON data:', error);
+    }
+  }
   
   
   useEffect(() => {
+  fetchCoastlineData(); // Call this function to fetch GeoJSON data
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -112,6 +134,40 @@ const OpenStreetMap = (props) => {
 
 
 }, []);
+useEffect(() => {
+  if (coastlineData && mapRef.current) {
+    const map = mapRef.current;
+    
+
+    coastlineData.features.forEach((feature, index) => {
+      const color = index % 2 === 0 ? '#696969' : '#A9A9A9'; 
+      L.geoJSON(feature, {
+        style: {
+          color,
+          weight: 5, 
+          opacity: 0.8,
+        },
+      }).addTo(map);
+    });
+
+    // Listen for zoomend event and update style accordingly
+    // map.on('zoomend moveend', () => {
+    //   // start with removing earlyer 
+    //   const zoomScale = 40075 / (2 ** map.getZoom())
+    //   coastlineData.features.forEach((feature, index) => {
+    //     const color = index % 2 === 0 ? '#696969' : '#A9A9A9';
+    //     L.geoJSON(feature, {
+    //       style: {
+    //         color,
+    //         weight: 20/zoomScale, 
+    //         opacity: 0.8,
+    //       },
+    //     }).addTo(map);
+    //   });
+    // });
+
+  }
+}, [coastlineData]);
 
 // Wait while geting location
 if (!mapCenter) {
@@ -125,6 +181,7 @@ return (
     minZoom={5}
     style={{ width: "100%", height: "100vh", margin: '0'}} 
     zoomControl={false}
+    ref={mapRef} 
     >
    <Marker icon={RuIcon} position={[64.123721, -21.926725]}>
       <Popup>
