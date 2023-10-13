@@ -82,21 +82,33 @@ const OpenStreetMap = (props) => {
 
   
   // Function to fetch costline GeoJSON data
-  async function fetchCoastlineData() {
-    try {
-      const wfsUrl = 'https://gis.lmi.is/geoserver/umhverfisraduneytid/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=umhverfisraduneytid%3Aloka&maxFeatures=100000&outputFormat=application%2Fjson';
-      const response = await fetch(wfsUrl);
+  async function fetchCoastlineData(maxRetries = 3) {
+    let retries = 0;
   
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+    async function doFetch() {
+      try {
+        const wfsUrl = 'https://gis.lmi.is/geoserver/umhverfisraduneytid/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=umhverfisraduneytid%3Aloka&maxFeatures=100000&outputFormat=application%2Fjson';
+        const response = await fetch(wfsUrl);
+  
+        if (!response.ok) {
+          throw new Error(HTTP error! Status: ${response.status});
+        }
+  
+        const coastlineData = await response.json();
+        setCoastlineData(coastlineData);
+      } catch (error) {
+        console.error('Error fetching GeoJSON data:', error);
+        retries++;
+        if (retries < maxRetries) {
+          console.log(Retrying fetch, attempt ${retries});
+          await doFetch(); // Retry the fetch
+        } else {
+          console.error('Max retry attempts reached. Giving up.');
+        }
       }
-  
-      const coastlineData = await response.json();
-      setCoastlineData(coastlineData);
-
-    } catch (error) {
-      console.error('Error fetching GeoJSON data:', error);
     }
+  
+    await doFetch(); // Start the initial fetch
   }
   
   
