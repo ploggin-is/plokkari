@@ -146,6 +146,7 @@ useEffect(() => {
           color,
           weight: 5, 
           opacity: 0.8,
+          zIndex: 9999,
         },
       }).addTo(map);
     });
