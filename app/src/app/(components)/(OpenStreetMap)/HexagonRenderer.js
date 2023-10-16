@@ -29,7 +29,6 @@ function GetHex(props) {
       })
     }, []);
 
-    console.log(data);
     
     if (data !== null) {
 
@@ -37,22 +36,20 @@ function GetHex(props) {
       // cleancoordinates.forEach((data) => {
       //   boundedHex.push(<Polygon color={'green'} key={number = number +1} positions={data}/>)
       // })
-      console.log(data);
+
       const cleanBoundaries = data.Clean;
-      if(cleanBoundaries != null){
-          cleanBoundaries.coordinates.forEach((x, index) => {
-          // console.log(x);
-          boundedHex.push(<Polygon key={index} fillColor={'green'} color={'black'} positions={x} />)
-          
-        })
+      if (cleanBoundaries != null) {
+        cleanBoundaries.coordinates.forEach((x, index) => {
+          const key = JSON.stringify(x); // Convert coordinates to a string for a unique key
+          boundedHex.push(<Polygon key={key} fillColor={'green'} color={'black'} positions={x} />);
+        });
       } 
       const dirtyBoundaries = data.Dirty;
       if(dirtyBoundaries != null){
         dirtyBoundaries.coordinates.forEach((x, index) => {
-          // console.log(x);
-          boundedHex.push(<Polygon key={index} color={'red'} positions={x} />)
-          
-        })
+          const key = JSON.stringify(x); // Convert coordinates to a string for a unique key
+          boundedHex.push(<Polygon key={key} color={'red'} positions={x} />);
+        });
       } 
       // data.coordinates.foreach(coordList => {
       //   boundedHex.push(<Polygon key={1} color={'green'} positions={coordList} />)

@@ -13,7 +13,14 @@ function MenuToolbar({ menuOpen, toggleMenu }) {
       <ul>
         <button 
           onClick={() => window.open('https://www.ploggin.is', "_blank", "noreferrer")} >
-          <li> <Image src="/(icons)/about.svg" width={40} height={40} /> About Us</li>
+          <li> 
+            <Image 
+              alt="About Icon"
+              src="/(icons)/about.svg" 
+              width={40} 
+              height={40} />
+               About Us
+          </li>
         </button>
         {/* <button 
           onClick= {() => alert("Show events")}>
@@ -27,6 +34,7 @@ function MenuToolbar({ menuOpen, toggleMenu }) {
       <Statistics />
       <div style={{ position: 'absolute', bottom: '65px', left: '50px' }}>
         <Image 
+          alt="Contact Icon"
           src="/RU_logo.png" 
           width={200} 
           height={200} 

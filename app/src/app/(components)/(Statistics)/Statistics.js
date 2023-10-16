@@ -37,7 +37,11 @@ const Statistics = () => {
       </div>
       <div className="statistics-right">
         <div className="statistics-image">
-          <Image src="/iceland.png" width={130} height={90} />
+          <Image 
+            alt="icleand"
+            src="/iceland.png" 
+            width={130} 
+            height={90} />
         </div>
       </div>
       {/* <div className='statistics-down'>

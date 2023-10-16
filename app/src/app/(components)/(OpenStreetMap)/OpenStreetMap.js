@@ -53,14 +53,50 @@ const Centralcircle = () => {
     // map._renderer._update();
 
   });
-  return null
+  return null;
   }
 
+
+const PlotCoastlines = (coastlineData) => {
+  const map = useMap();
+
+  coastlineData.coastlineData.features.forEach((feature, index) => {
+    const color = index % 2 === 0 ? '#696969' : '#A9A9A9'; 
+    L.geoJSON(feature, {
+      style: {
+        color,
+        weight: 5, 
+        opacity: 0.8,
+        zIndex: 9999,
+      },
+    }).addTo(map);
+  });
+
+//     // Listen for zoomend event and update style accordingly
+//     // map.on('zoomend moveend', () => {
+//     //   // start with removing earlyer 
+//     //   const zoomScale = 40075 / (2 ** map.getZoom())
+//     //   coastlineData.features.forEach((feature, index) => {
+//     //     const color = index % 2 === 0 ? '#696969' : '#A9A9A9';
+//     //     L.geoJSON(feature, {
+//     //       style: {
+//     //         color,
+//     //         weight: 20/zoomScale, 
+//     //         opacity: 0.8,
+//     //       },
+//     //     }).addTo(map);
+//     //   });
+//     // });
+
+  return null;
+}
+
+
+  
 
 const OpenStreetMap = (props) => {
   const [mapCenter, setMapCenter] = useState(null);
   const [coastlineData, setCoastlineData] = useState(null); 
-  const mapRef = useRef(null);
 
 
   const triggerGetHexFunction = useRef(null)
@@ -134,44 +170,11 @@ const OpenStreetMap = (props) => {
 
 
 }, []);
-useEffect(() => {
-  if (coastlineData && mapRef.current) {
-    const map = mapRef.current;
-    
 
-    coastlineData.features.forEach((feature, index) => {
-      const color = index % 2 === 0 ? '#696969' : '#A9A9A9'; 
-      L.geoJSON(feature, {
-        style: {
-          color,
-          weight: 5, 
-          opacity: 0.8,
-          zIndex: 9999,
-        },
-      }).addTo(map);
-    });
 
-    // Listen for zoomend event and update style accordingly
-    // map.on('zoomend moveend', () => {
-    //   // start with removing earlyer 
-    //   const zoomScale = 40075 / (2 ** map.getZoom())
-    //   coastlineData.features.forEach((feature, index) => {
-    //     const color = index % 2 === 0 ? '#696969' : '#A9A9A9';
-    //     L.geoJSON(feature, {
-    //       style: {
-    //         color,
-    //         weight: 20/zoomScale, 
-    //         opacity: 0.8,
-    //       },
-    //     }).addTo(map);
-    //   });
-    // });
 
-  }
-}, [coastlineData]);
-
-// Wait while geting location
-if (!mapCenter) {
+// Wait while geting location and Get Coast line data
+if (!mapCenter || !coastlineData) {
   return <Loading />;
 }
 const { latitude, longitude } = mapCenter;
@@ -182,11 +185,10 @@ return (
     minZoom={5}
     style={{ width: "100%", height: "100vh", margin: '0'}} 
     zoomControl={false}
-    ref={mapRef} 
     >
    <Marker icon={RuIcon} position={[64.123721, -21.926725]}>
       <Popup>
-        <Image alt="asd"
+        <Image alt="Reykjavik University Logo"
           src="/RU_logo.png" 
           width={200} 
           height={0} />   
@@ -200,6 +202,7 @@ return (
     />
     <SetViewOnClick zoomLvl={props.zoomLvl}/>
     <Centralcircle isPressed={props.isPressed}/>
+    <PlotCoastlines coastlineData={coastlineData} />
     {/* <FeatureGroup >
       <EditControl
         ref={editRef}
