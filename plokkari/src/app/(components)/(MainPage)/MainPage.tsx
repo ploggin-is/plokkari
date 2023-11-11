@@ -1,17 +1,19 @@
-import OpenStreetMap from '../(OpenStreetMap)/OpenStreetMap'
-import TopToolbar from '../(TopToolbar)/TopToolbar'
+import { useMemo } from "react";
+import dynamic from "next/dynamic";
+import { TopToolbar } from "../(TopToolbar)/TopToolbar";
 
-const MainPage = () => 
-{
+export const MainPage = () => {
+  const OpenStreetMap = useMemo(
+    () =>
+      dynamic(() => import("../(OpenStreetMap)/OpenStreetMap"), { ssr: false }),
+    []
+  );
   return (
     <main>
-      <TopToolbar></TopToolbar> 
-      {/* <CleanButton changeCleanButton={ isPressed => setIsPressed(isPressed)} isPressed={isPressed}/> */}
+      <TopToolbar />
       <div className="map-container">
         <OpenStreetMap zoomLvl={13} />
-        {/* <StartButton /> */}
       </div>
     </main>
   );
 };
-export default MainPage;

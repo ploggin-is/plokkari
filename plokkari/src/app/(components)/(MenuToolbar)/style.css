@@ -1,75 +1,75 @@
-
 .menutoolbar {
-    position: fixed;
-    top: 0px;
-    left: -300px;
-    width: 300px;
-    height: 100%;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: left 0.3s ease-in-out;
-    z-index: 9999;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: black;
-  }
-  
-  .menutoolbar.open {
-    left: 0;
-  }
-  
-  .menutoolbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .menutoolbar li {
-    padding: 1rem;
-    padding-left: 3rem;
-    font-size: 1.2rem;
-    display: inline-block;
-    vertical-align: middle; 
-    margin-right: 20px; 
-  }
-  
-  .menutoolbar li img {
-    display: inline-block; 
-    vertical-align: middle; 
-    margin-right: 5px; 
-  }
-  
-  .menutoolbar h1 {
-    padding: 2rem;
-    font-size: 2rem;
-  }
-  
-  .menutoolbar ul button {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .menutoolbar button:hover {
-    background-color: lightgreen;
-  }
-  
-  .close-button {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 24px;
-    height: 24px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    outline: none;
-    cursor: pointer;
-  }
-  
-  .settings-button {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-  }
+  position: fixed;
+  top: 0px;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: left 0.3s ease-in-out;
+  z-index: 9999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.menutoolbar.open {
+  left: 0;
+}
+
+.menutoolbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menutoolbar li {
+  padding: 1rem;
+  padding-left: 3rem;
+  font-size: 1.2rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+.menutoolbar li img {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.menutoolbar h1 {
+  padding: 2rem;
+  font-size: 2rem;
+}
+
+.menutoolbar ul button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.menutoolbar button:hover {
+  background-color: lightgreen;
+}
+
+.close-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.settings-button {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+}

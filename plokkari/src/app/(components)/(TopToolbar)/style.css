@@ -11,18 +11,21 @@
   z-index: 9998;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-  
+
 .toolbar-buttons {
   display: flex;
   font-weight: bold;
-  font-size: 18pt;
+  /* font-size: 18pt; */
   justify-content: space-between;
   align-items: center;
-  padding: 0 16px ;
+  padding: 0 16px;
   height: 100%;
   color: black;
   z-index: 9999;
 }
 .toolbar-buttons button {
+  font-size: 1.8rem;
+  background: transparent;
+  border: 0;
   margin-right: 16px;
 }
