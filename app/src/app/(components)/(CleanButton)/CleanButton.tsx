@@ -1,16 +1,27 @@
 'use client'
-import './style.css'
 import L from 'leaflet'
 
-function CleanButton(props) {
+import './style.css'
+
+type CleanButtonProps = {
+  isPressed: boolean
+  changeCleanButton: (isPressed: boolean) => void
+}
+
+export const CleanButton = ({
+  isPressed,
+  changeCleanButton,
+}: CleanButtonProps) => {
   const handleClick = () => {
-    props.changeCleanButton(!props.isPressed)
+    changeCleanButton(!isPressed)
   }
 
   return (
     <div
       ref={(ref) => {
-        if (!ref) return
+        if (!ref) {
+          return
+        }
         /** import L from "leaflet"; */
         L.DomEvent.disableClickPropagation(ref).disableScrollPropagation(ref)
       }}
@@ -19,14 +30,10 @@ function CleanButton(props) {
         <div
           className="hexagon"
           style={{
-            background: props.isPressed
-              ? 'rgb(241, 131, 124)'
-              : 'rgb(146, 218, 146)',
+            background: isPressed ? 'rgb(241, 131, 124)' : 'rgb(146, 218, 146)',
           }}
-        ></div>
+        />
       </button>
     </div>
   )
 }
-
-export default CleanButton
