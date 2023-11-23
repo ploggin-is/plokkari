@@ -9,18 +9,24 @@
     "dev": "next dev",
     "build": "next build && rm -rf ./.next/cache",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "lint:eslint": "eslint ${AUTOFIX:+ --fix} ${SILENT:+ -o /dev/null} ${ERRORSONLY:+ --quiet} \"*.{mjs,js,ts,tsx}\" \"src/**/*.{mjs,js,ts,tsx}\"",
+    "lint:prettier": "prettier ${AUTOFIX:+ --write} ${AUTOFIX:- --check} ${SILENT:+ --loglevel=error} ${ERRORSONLY:+ --loglevel=error} --no-error-on-unmatched-pattern \"*.{json,md,yml}\" \"src/**/*.{json,md,yml,css,html}\"",
+    "check": "npm run check:types  &&  npm run check:eslint",
+    "check:eslint": "ERRORSONLY=true  npm run lint:eslint",
+    "check:types": "tsc --project tsconfig.json --noEmit --pretty --incremental false",
+    "format": "AUTOFIX=true SILENT=true npm run lint"
   },
   "dependencies": {
+    "@types/react-dom": "^18.2.15",
     "autoprefixer": "10.4.14",
-    "eslint": "8.38.0",
-    "eslint-config-next": "13.3.0",
     "h3-js": "^4.1.0",
     "lottie-web": "^5.11.0",
     "next": "13.3.0",
     "node": "^18.8.1",
     "postcss": "8.4.21",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-leaflet": "^4.2.1",
@@ -29,8 +35,20 @@
     "tailwindcss": "3.3.1"
   },
   "devDependencies": {
+    "@hugsmidjan/hxmstyle": "^8.4.0",
+    "@next/eslint-plugin-next": "^14.0.2",
+    "@types/leaflet": "^1.9.8",
     "@types/node": "18.16.1",
     "@types/react": "18.2.0",
-    "leaflet": "^1.9.3"
+    "eslint": "^8.53.0",
+    "prettier": "^2.8.8",
+    "tailwindcss": "3.3.1",
+    "typescript": "^4.9.5"
+  },
+  "hxmstyle": {
+    "options": {
+      "react": true,
+      "typescript": true
+    }
   }
 }

@@ -4,6 +4,6 @@ const config = {
     appDir: true,
   },
   ignoreDuringBuilds: true,
-};
+}
 
-module.exports = config;
+module.exports = config
