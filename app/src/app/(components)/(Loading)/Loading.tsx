@@ -5,7 +5,7 @@ import lottie from 'lottie-web'
 import animationData from '../../../../public/loading.json'
 
 export const Loading = () => {
-  const container = useRef(null)
+  const container = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (container.current) {

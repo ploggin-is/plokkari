@@ -15,7 +15,7 @@ type DataProps = {
   } | null
 }
 
-export const GetHex = ({ triggerGetHexFunction }: GetHexProps) => {
+export const HexagonRenderer = ({ triggerGetHexFunction }: GetHexProps) => {
   const [data, setData] = useState<DataProps | null>(null)
   const map = useMap()
   // const h3 = require("h3-js");
