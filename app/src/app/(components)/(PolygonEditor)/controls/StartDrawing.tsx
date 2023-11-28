@@ -20,11 +20,9 @@ export const startDrawing =
 
     e.preventDefault()
 
-    const isTouchDevice =
-      'ontouchstart' in window ||
-      ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0)
+    const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
-    const eventName = isTouchDevice ? 'touchstart' : 'click'
+    const eventName = isiOS ? 'touchstart' : 'click'
     const event = new Event(eventName)
 
     polygonStuff?.dispatchEvent(event)
